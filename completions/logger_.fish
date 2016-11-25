@@ -1,0 +1,1 @@
+complete logger\_ -d "Empower your log capabilities to the maximum level"

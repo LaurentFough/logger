@@ -1,7 +1,7 @@
 [![Build Status][travis-badge]][travis-link]
 [![Slack Room][slack-badge]][slack-link]
 
-# logger
+# logger_
 
 Empower your log capabilities to the maximum level
 
@@ -10,18 +10,18 @@ Empower your log capabilities to the maximum level
 With [fisherman]
 
 ```
-fisher logger
+fisher logger_
 ```
 
 ## Usage
 
 ```fish
-log foo
-debug foo # or log foo 1
-warn foo # or log foo 2
-error foo # or log foo 3
-fatal foo # or log foo 4
-critical foo # or log foo 5
+logger_ foo
+logger_debug foo # or logger_ foo 1
+logger_warn foo # or logger_ foo 2
+logger_error foo # or logger_ foo 3
+logger_fatal foo # or logger_ foo 4
+logger_critical foo # or logger_ foo 5
 ```
 
 [travis-link]: https://travis-ci.org/fisherman/logger
