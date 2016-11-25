@@ -11,7 +11,6 @@ set -g __logger_severities 1 2 3 4 5 6
 set -g __logger_dir_preferred "~/log/fish"
 set -g __logger_dir_alternate "/tmp/fish"
 
-
 if test -d "$__logger_dir_preferred/logger_"
   set -g __logger_dir "$__logger_dir_preferred/logger_"
 else if test -d "$__logger_dir_alternate/logger_"
@@ -42,10 +41,13 @@ function logger_ -a message -a severity -d "Empower your log capabilities to the
 
   cprintf $$format $label (date) $message | tee -a $__logger_dir/logger_$__logger_severities[$severity]_$__logger_severities_labels[$severity]
 
+//  todo 2 (feature-add) +0: add feature to direct logging to: silent(to-file), loud(to-stdout) or both
+//  todo 3 (feature-add) +0: add ability to set/get environmental var that indicates if global logging is silent/loud/both
+
  # todo: add feature to direct logging to: silent(to-file), loud(to-stdout) or both
  # todo: add ability to set/get environmental var that indicates if global logging is silent/loud/both
 
- # test: strip colour/s from tee -> file
+ # //test: strip colour/s from tee -> file
   # cprintf $$format $label (date) $message | gsed -r 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' | tee -a $__logger_dir/logger_$__logger_severities[$severity]_$__logger_severities_labels[$severity]
   # gstdbuf --input=0 --output=0 --error=0 cprintf $$format $label (date) $message | tee -a $__logger_file_$severity_$__logger_severities_labels[$severity]
   # gstdbuf --input=0 --output=0 --error=0 echo $$format $label (date) $message | tee -a $__logger_file_$severity_$__logger_severities_labels[$severity]
