@@ -20,7 +20,9 @@ else
   set -g __logger_dir "$__logger_dir_alternate/logger_"
 end
 
+set --query LOGGER_MODE; or set LOGGER_MODE 0
 
+# debug/ or for extraneous(on-call) use
 set -g __logger_file_DEBUG "$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[1]"
 set -g __logger_file_INFO "$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[2]"
 set -g __logger_file_WARN "$__logger_dir/logger_$__logger_severities[2]_$__logger_severities_labels[3]"
@@ -29,7 +31,7 @@ set -g __logger_file_FATAL "$__logger_dir/logger_$__logger_severities[4]_$__logg
 set -g __logger_file_CRITICAL "$__logger_dir/logger_$__logger_severities[5]_$__logger_severities_labels[6]"
 
 
-function logger_ -a message -a severity -d "Empower your log capabilities to the maximum level"
+function logger_ -a message -a severity -a LOGGER_MODE -d "Empower your log capabilities to the maximum level"
   set -l label
   set -l format
 
@@ -39,13 +41,20 @@ function logger_ -a message -a severity -d "Empower your log capabilities to the
   set label $__logger_severities_labels[$severity]
   set format "__logger_format_"$label
 
-  cprintf $$format $label (date) $message | tee -a $__logger_dir/logger_$__logger_severities[$severity]_$__logger_severities_labels[$severity]
+  switch $LOGGER_MODE # default: stdout
+    case 'stdout' 'to-stdout' 0 'default'
+      cprintf $$format $label (date) $message
 
-//  todo 2 (feature-add) +0: add feature to direct logging to: silent(to-file), loud(to-stdout) or both
-//  todo 3 (feature-add) +0: add ability to set/get environmental var that indicates if global logging is silent/loud/both
+    case 'file' 'to-file' 'silent' 1 # to-file
+      echo $label (date) $message | tee -a $__logger_dir/logger_$__logger_severities[$severity]_$__logger_severities_labels[$severity];
 
- # todo: add feature to direct logging to: silent(to-file), loud(to-stdout) or both
- # todo: add ability to set/get environmental var that indicates if global logging is silent/loud/both
+    case 'loud' 'too-loud' 'to-both' 2 # to-both
+      cprintf $$format $label (date) $message;
+      echo $label (date) $message | tee -a $__logger_dir/logger_$__logger_severities[$severity]_$__logger_severities_labels[$severity];
+
+    case '*' # default: stdout
+      cprintf $$format $label (date) $message
+  end
 
  # //test: strip colour/s from tee -> file
   # cprintf $$format $label (date) $message | gsed -r 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' | tee -a $__logger_dir/logger_$__logger_severities[$severity]_$__logger_severities_labels[$severity]
