@@ -18,6 +18,7 @@ fisher logger_
 ```fish
 logger_ foo
 logger_debug foo # or logger_ foo 1
+logger_info foo # or logger_ foo 1
 logger_warn foo # or logger_ foo 2
 logger_error foo # or logger_ foo 3
 logger_fatal foo # or logger_ foo 4

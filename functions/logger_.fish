@@ -1,9 +1,10 @@
 set -g __logger_format_DEBUG "<fg:blue>%s</fg> <fg:purple>[%s]</fg> :: <fg:green>[%s]</fg>"
+set -g __logger_format_INFO "<fg:blue>%s</fg> <fg:purple>[%s]</fg> :: <fg:green>[%s]</fg>"
 set -g __logger_format_WARN "<fg:yellow>%s</fg> <fg:purple>[%s]</fg> :: <fg:blue>[%s]</fg>"
 set -g __logger_format_ERROR "<fg:ffAA00>%s</fg> <fg:purple>[%s]</fg> :: <fg:yellow>[%s]</fg>"
 set -g __logger_format_FATAL "<fg:red>%s</fg> <fg:purple>[%s]</fg> :: <fg:red>[%s]</fg>"
 set -g __logger_format_CRITICAL "<bg:red><fg:white>%s</fg></bg> <fg:purple>[%s]</fg> :: <fg:red>[%s]</fg>"
-set -g __logger_severities_labels "DEBUG" "WARN" "ERROR" "FATAL" "CRITICAL"
+set -g __logger_severities_labels "DEBUG" "INFO" "WARN" "ERROR" "FATAL" "CRITICAL"
 set -g __logger_severities 1 2 3 4 5
 set -g __logger_dir_preferred "$HOME/log/fish"
 set -g __logger_dir_alternate "/tmp/fish"
@@ -18,6 +19,7 @@ else
 end
 
 set -g __logger_file_DEBUG "$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[1]"
+set -g __logger_file_INFO "$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[1]"
 set -g __logger_file_WARN "$__logger_dir/logger_$__logger_severities[2]_$__logger_severities_labels[2]"
 set -g __logger_file_ERROR "$__logger_dir/logger_$__logger_severities[3]_$__logger_severities_labels[3]"
 set -g __logger_file_FATAL "$__logger_dir/logger_$__logger_severities[4]_$__logger_severities_labels[4]"
@@ -47,6 +49,11 @@ end
 
 
 function logger_debug -a message -d "Alias of 'logger_ <msg>' or 'logger_ <msg> 1'"
+  logger_ $message 1
+end
+
+
+function logger_info -a message -d "Alias of 'logger_ <msg>' or 'logger_ <msg> 1'"
   logger_ $message 1
 end
 
