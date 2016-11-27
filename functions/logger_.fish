@@ -69,26 +69,26 @@ function logger_debug -a message -d "Alias of 'logger_ <msg>' or 'logger_ <msg> 
 end
 
 
-function logger_info -a message -d "Alias of 'logger_ <msg>' or 'logger_ <msg> 1'"
-  logger_ $message 1
-end
-
-
-function logger_warn -a message -d "Alias of 'logger_ <msg> 2'"
+function logger_info -a message -d "Alias of 'logger_ <msg> 2'"
   logger_ $message 2
 end
 
 
-function logger_error -a message -d "Alias of 'logger_ <msg> 3'"
+function logger_warn -a message -d "Alias of 'logger_ <msg> 3'"
   logger_ $message 3
 end
 
 
-function logger_fatal -a message -d "Alias of 'logger_ <msg> 4'"
+function logger_error -a message -d "Alias of 'logger_ <msg> 4'"
   logger_ $message 4
 end
 
 
-function logger_critical -a message -d "Alias of 'logger_ <msg> 5'"
+function logger_fatal -a message -d "Alias of 'logger_ <msg> 5'"
   logger_ $message 5
+end
+
+
+function logger_critical -a message -d "Alias of 'logger_ <msg> 6'"
+  logger_ $message 6
 end
