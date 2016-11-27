@@ -20,7 +20,17 @@ else
   set -g __logger_dir "$__logger_dir_alternate/logger_"
 end
 
-set --query LOGGER_MODE; or set LOGGER_MODE 0
+# check for LOGGER_MODE
+if test -z $LOGGER_MODE
+	set LOGGER_MODE 0
+else
+	switch $LOGGER_MODE;
+		case 'stdout' 'to-stdout' 0 'default' 'file' 'to-file' 'silent' 1 'loud' 'too-loud' 'to-both' '2'
+			# do nothing
+	  	case '*'
+			set LOGGER_MODE 0
+	end
+end
 
 # debug/ or for extraneous(on-call) use
 set -g __logger_file_DEBUG "$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[1]"
