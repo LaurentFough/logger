@@ -20,6 +20,17 @@ else
   set -g __logger_dir "$__logger_dir_alternate/logger_"
 end
 
+# debug/ or for extraneous(on-call) use
+set -g __logger_file_DEBUG	"$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[1]"
+set -g __logger_file_INFO	"$__logger_dir/logger_$__logger_severities[2]_$__logger_severities_labels[2]"
+set -g __logger_file_WARN	"$__logger_dir/logger_$__logger_severities[3]_$__logger_severities_labels[3]"
+set -g __logger_file_ERROR	"$__logger_dir/logger_$__logger_severities[4]_$__logger_severities_labels[4]"
+set -g __logger_file_FATAL	"$__logger_dir/logger_$__logger_severities[5]_$__logger_severities_labels[5]"
+set -g __logger_file_CRITICAL	"$__logger_dir/logger_$__logger_severities[6]_$__logger_severities_labels[6]"
+
+
+function logger_ -a message -a severity -a LOGGER_MODE -d "Empower your log capabilities to the maximum level"
+
 # check for LOGGER_MODE
 if test -z $LOGGER_MODE
 	set LOGGER_MODE 0
@@ -32,16 +43,6 @@ else
 	end
 end
 
-# debug/ or for extraneous(on-call) use
-set -g __logger_file_DEBUG "$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[1]"
-set -g __logger_file_INFO "$__logger_dir/logger_$__logger_severities[1]_$__logger_severities_labels[2]"
-set -g __logger_file_WARN "$__logger_dir/logger_$__logger_severities[2]_$__logger_severities_labels[3]"
-set -g __logger_file_ERROR "$__logger_dir/logger_$__logger_severities[3]_$__logger_severities_labels[4]"
-set -g __logger_file_FATAL "$__logger_dir/logger_$__logger_severities[4]_$__logger_severities_labels[5]"
-set -g __logger_file_CRITICAL "$__logger_dir/logger_$__logger_severities[5]_$__logger_severities_labels[6]"
-
-
-function logger_ -a message -a severity -a LOGGER_MODE -d "Empower your log capabilities to the maximum level"
   set -l label
   set -l format
 
